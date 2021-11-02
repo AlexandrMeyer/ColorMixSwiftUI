@@ -9,35 +9,24 @@ import SwiftUI
 
 struct ContentView: View {
     
-    @State private var redSliderValue = Double.random(in: 0...255)
-    @State private var greenSliderValue = Double.random(in: 0...255)
-    @State private var blueSliderValue = Double.random(in: 0...255)
-    
-    @State private var redTextField = ""
-    @State private var greenTextField = ""
-    @State private var blueTextField = ""
+    @State private var red = Double.random(in: 0...255)
+    @State private var green = Double.random(in: 0...255)
+    @State private var blue = Double.random(in: 0...255)
     
     @FocusState private var amountIsFocused: Bool
-    
-    private var color: Color {
-        Color(
-            red: redSliderValue / 255,
-            green: greenSliderValue / 255,
-            blue: blueSliderValue / 255
-        )
-    }
     
     var body: some View {
         ZStack {
             Color.indigo.ignoresSafeArea()
-            VStack {
-                RoundedRectangle(cornerRadius: 20)
-                    .foregroundColor(color)
-                    .frame(width: 300, height: 120)
-                    .overlay(RoundedRectangle(cornerRadius: 20).stroke(Color.white, lineWidth: 4))
-                SliderView(sliderValue: $redSliderValue, tintColor: .red)
-                SliderView(sliderValue: $greenSliderValue, tintColor: .green)
-                SliderView(sliderValue: $blueSliderValue, tintColor: .blue)
+            
+            VStack(spacing: 40) {
+                ColorView(red: red, green: green, blue: blue)
+                
+                VStack {
+                    ColorSliderView(sliderValue: $red, color: .red)
+                    ColorSliderView(sliderValue: $green, color: .green)
+                    ColorSliderView(sliderValue: $blue, color: .blue)
+                }
                 Spacer()
             }
             .focused($amountIsFocused)
